@@ -80,28 +80,8 @@ function TaskCompletionForm() {
             Is the task completed?
           </label>
         </div>
-        <div>
-          <label>
-            Completed/Due Date:
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
-          </label>
-        </div>
         <button type="submit">Submit</button>
       </form>
-
-      <h2>Tasks List</h2>
-      <ul>
-        {tasks.map((task) => (
-          <li key={task.id}>
-            {task.task} - {task.isCompleted ? 'Completed' : 'Not Completed'} - {new Date(task.date).toLocaleDateString()}
-            <button onClick={() => handleDelete(task.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }
