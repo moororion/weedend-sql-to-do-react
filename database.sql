@@ -1,18 +1,21 @@
-CREATE TABLE "tasks"(
-"id" serial primary key,
-"number" integer,
-"task" varchar(120) not null,
-"completed" boolean,
-"date completed" date
+DROP TABLE IF EXISTS tasks;
+
+CREATE TABLE "tasks" (
+  "id" SERIAL PRIMARY KEY,
+  "task" VARCHAR(255) NOT NULL,
+  "completed" BOOLEAN NOT NULL,
+  "dateCompleted" DATE NOT NULL
 );
 
-INSERT INTO "tasks"
-	("number", "task", "completed", "date completed")
-VALUES
-(1, 'Do homework.', true, '02/13/2024'),
-(2, 'Do the dishes.', false, '02/13/2024'),
-(3, 'Clean the bathroom.', false, '02/13/2024'),
-(4, 'Finish eating ice-cream.', true, '02/14/2024'),
-(5, 'Practice Corridos.', true, '02/15/2024');
-SELECT * FROM "tasks";
 
+
+
+INSERT INTO "tasks" ("task", "completed", "dateCompleted")
+VALUES
+('Do homework.', true, '2024-02-13'),
+('Do the dishes.', false, '2024-02-13'),
+('Clean the bathroom.', false, '2024-02-13'),
+('Finish eating ice-cream.', true, '2024-02-14'),
+('Practice Corridos.', true, '2024-02-15');
+
+SELECT * FROM "tasks";

@@ -3,7 +3,7 @@ const pg = require('pg');
 const pool = new pg.Pool({
     host: 'localhost',
     port: 5432,
-    database: 'weekend-to-do-app', 
+    database: 'todo-app2',
 });
 
 module.exports = pool;
