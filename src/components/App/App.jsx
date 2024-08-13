@@ -1,11 +1,11 @@
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
 
-function TaskCompletionForm() {
+function App() {
+  const [tasks, setTasks] = useState([]);
   const [task, setTask] = useState('');
   const [isCompleted, setIsCompleted] = useState(false);
   const [date, setDate] = useState('');
-  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     fetchTasks();
@@ -27,28 +27,25 @@ function TaskCompletionForm() {
     const newTask = {
       task: task,
       completed: isCompleted,
-      dateCompleted: new Date(date)
+      dateCompleted: date,
     };
-
-    console.log('Submitting task:', newTask);
 
     axios.post('/api/todo', newTask)
       .then((response) => {
+        setTasks([...tasks, response.data]);
         setTask('');
         setIsCompleted(false);
         setDate('');
-        fetchTasks();
       })
       .catch((error) => {
         console.error('Error adding task:', error);
       });
   };
 
-
-  const handleDelete = (taskId) => {
-    axios.delete(`/api/todo/${taskId}`)
-      .then((response) => {
-        fetchTasks();
+  const handleDelete = (id) => {
+    axios.delete(`/api/todo/${id}`)
+      .then(() => {
+        setTasks(tasks.filter(task => task.id !== id));
       })
       .catch((error) => {
         console.error('Error deleting task:', error);
@@ -90,14 +87,13 @@ function TaskCompletionForm() {
             />
           </label>
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit">Add Task</button>
       </form>
 
-      <h2>Tasks List</h2>
       <ul>
         {tasks.map((task) => (
           <li key={task.id}>
-            {task.task} - {task.isCompleted ? 'Completed' : 'Not Completed'} - {new Date(task.date).toLocaleDateString()}
+            {task.task} - {task.completed ? 'Yes' : 'No'} - {new Date(task.dateCompleted).toLocaleDateString()}
             <button onClick={() => handleDelete(task.id)}>Delete</button>
           </li>
         ))}
@@ -106,4 +102,4 @@ function TaskCompletionForm() {
   );
 }
 
-export default TaskCompletionForm;
+export default App;
